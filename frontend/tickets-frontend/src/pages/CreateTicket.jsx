@@ -65,9 +65,9 @@ export default function CreateTicket() {
     console.log("Form submitted:", formData);
     const res = createTicket(formData);
     res
-      .then(() => {
+      .then((d) => {
         alert("Ticket created successfully!");
-        navigate("/");
+        navigate(`/tickets/${d.id}`);
       })
       .catch((error) => {
         console.error("Error creating ticket:", error);
@@ -105,6 +105,7 @@ export default function CreateTicket() {
             onChange={handleChange}
             required
             disabled={loading}
+            limit={200}
             className="w-full p-2 border"
           />
         </div>
