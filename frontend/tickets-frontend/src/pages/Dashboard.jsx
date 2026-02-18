@@ -2,15 +2,18 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getTickets } from "../api/ticket.service";
 import TicketList from "../components/TicketList";
+import { useDebounce } from "../api/descriptionDebouncer";
 
 export default function Dashboard() {
   const [tickets, setTickets] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
+  const deBouncedSearchQuery = useDebounce(searchQuery, 500);
 
   useEffect(() => {
     const fetchTickets = async () => {
       try {
-        const data = await getTickets();
+        const data = await getTickets({ search: deBouncedSearchQuery });
         setTickets(data);
       } catch (error) {
         console.error("Error fetching tickets:", error);
@@ -20,7 +23,7 @@ export default function Dashboard() {
     };
 
     fetchTickets();
-  }, []);
+  }, [deBouncedSearchQuery]);
 
   if (loading) return <p>Loading...</p>;
 
@@ -40,6 +43,9 @@ export default function Dashboard() {
           >
             Stats
           </Link>
+        </div>
+        <div>
+            <input value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} type="text" placeholder="Search tickets..." className="w-full p-2 border" />
         </div>
       </div>
       <TicketList tickets={tickets} />

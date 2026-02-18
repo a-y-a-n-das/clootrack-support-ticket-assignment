@@ -1,7 +1,7 @@
 import { api } from "./axios";
 
-export const getTickets = async () => {
-  const res = await api.get("/tickets/");
+export const getTickets = async (params = {}) => {
+  const res = await api.get(`/tickets/`, { params });
   return res.data;
 };
 
