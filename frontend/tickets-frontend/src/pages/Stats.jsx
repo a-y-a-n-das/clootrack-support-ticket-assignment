@@ -8,7 +8,10 @@ export default function Stats() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetchStats();
+        setInterval(() => {
+        fetchStats();}, 5000); // Refresh every 5 seconds
+
+        fetchStats(); 
     }, []);
 
     const fetchStats = async () => {
