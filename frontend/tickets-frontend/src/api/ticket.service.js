@@ -24,3 +24,8 @@ export const classifyTicket = async (data) => {
   const res = await api.post("/tickets/classify/", { description: data });
   return res.data;
 };
+
+export const stats = async () => {
+  const res = await api.get("/tickets/stats/");
+  return res.data;
+};

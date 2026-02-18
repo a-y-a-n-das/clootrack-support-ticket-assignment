@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { createTicket, classifyTicket } from "../api/ticket.service";
 import { useDebounce } from "../api/descriptionDebouncer";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateTicket() {
   const [description, setDescription] = useState("");
+  const navigate = useNavigate();
   const deBouncedDescription = useDebounce(description, 800);
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -16,10 +19,13 @@ export default function CreateTicket() {
   useEffect(() => {
     const categories = ["billing", "technical", "general", "account"];
     const priorities = ["low", "medium", "high"];
+    
     if (deBouncedDescription) {
-      console.log("Classifying ticket with description:", deBouncedDescription);
-      classifyTicket(deBouncedDescription)
-        .then((res) => {
+      
+      const classify = async () => {
+        setLoading(true);
+        try {
+          const res = await classifyTicket(deBouncedDescription);
           if (
             categories.includes(res.suggested_category) &&
             priorities.includes(res.suggested_priority)
@@ -35,12 +41,16 @@ export default function CreateTicket() {
               res,
             );
           }
-        })
-        .catch((error) => {
+        } catch (error) {
           console.error("Error classifying ticket:", error);
-        });
+        } finally {
+          setLoading(false);
+        }
+      };
+      
+      classify();
     }
-  }, [deBouncedDescription, setFormData]);
+  }, [deBouncedDescription]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -57,7 +67,7 @@ export default function CreateTicket() {
     res
       .then(() => {
         alert("Ticket created successfully!");
-        window.location.href = "/";
+        navigate("/");
       })
       .catch((error) => {
         console.error("Error creating ticket:", error);
@@ -66,7 +76,22 @@ export default function CreateTicket() {
 
   return (
     <div className="max-w-[600px] mx-auto p-5">
-      <h1 className="mb-5">Create Ticket</h1>
+      <div className="flex justify-between items-center mb-5">
+        <h1>Create Ticket</h1>
+        <button
+          onClick={() => navigate("/")}
+          className="px-4 py-2 border cursor-pointer"
+        >
+          Dashboard
+        </button>
+      </div>
+      
+      {loading && (
+        <div className="mb-4 p-3 border bg-yellow-50">
+          <p>Analyzing description and suggesting category/priority...</p>
+        </div>
+      )}
+      
       <form onSubmit={handleSubmit} className="border p-5">
         <div className="mb-4">
           <label htmlFor="title" className="block mb-1">
@@ -79,6 +104,7 @@ export default function CreateTicket() {
             value={formData.title}
             onChange={handleChange}
             required
+            disabled={loading}
             className="w-full p-2 border"
           />
         </div>
@@ -97,6 +123,7 @@ export default function CreateTicket() {
             }}
             required
             rows="5"
+            disabled={loading}
             className="w-full p-2 border"
           />
         </div>
@@ -110,6 +137,7 @@ export default function CreateTicket() {
             name="category"
             value={formData.category}
             onChange={handleChange}
+            disabled={loading}
             className="w-full p-2 border"
           >
             <option value="billing">Billing</option>
@@ -128,6 +156,7 @@ export default function CreateTicket() {
             name="priority"
             value={formData.priority}
             onChange={handleChange}
+            disabled={loading}
             className="w-full p-2 border"
           >
             <option value="low">Low</option>
@@ -150,7 +179,7 @@ export default function CreateTicket() {
           />
         </div>
 
-        <button type="submit" className="px-5 py-2 border cursor-pointer">
+        <button type="submit" disabled={loading} className="px-5 py-2 border cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">
           Create Ticket
         </button>
       </form>
