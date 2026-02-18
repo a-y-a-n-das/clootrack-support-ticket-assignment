@@ -19,3 +19,8 @@ export const updateTicket = async (id, data) => {
   const res = await api.patch(`/tickets/${id}/`, data);
   return res.data;
 };
+
+export const classifyTicket = async (data) => {
+  const res = await api.post("/tickets/classify/", { description: data });
+  return res.data;
+};
