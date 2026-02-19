@@ -19,9 +19,8 @@ export default function CreateTicket() {
   useEffect(() => {
     const categories = ["billing", "technical", "general", "account"];
     const priorities = ["low", "medium", "high"];
-    
+
     if (deBouncedDescription) {
-      
       const classify = async () => {
         setLoading(true);
         try {
@@ -47,7 +46,7 @@ export default function CreateTicket() {
           setLoading(false);
         }
       };
-      
+
       classify();
     }
   }, [deBouncedDescription]);
@@ -85,13 +84,13 @@ export default function CreateTicket() {
           Dashboard
         </button>
       </div>
-      
+
       {loading && (
         <div className="mb-4 p-3 border bg-yellow-50">
           <p>Analyzing description and suggesting category/priority...</p>
         </div>
       )}
-      
+
       <form onSubmit={handleSubmit} className="border p-5">
         <div className="mb-4">
           <label htmlFor="title" className="block mb-1">
@@ -180,7 +179,11 @@ export default function CreateTicket() {
           />
         </div>
 
-        <button type="submit" disabled={loading} className="px-5 py-2 border cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">
+        <button
+          type="submit"
+          disabled={loading}
+          className="px-5 py-2 border cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+        >
           Create Ticket
         </button>
       </form>

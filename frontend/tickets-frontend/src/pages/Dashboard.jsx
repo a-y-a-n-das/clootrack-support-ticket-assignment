@@ -45,7 +45,13 @@ export default function Dashboard() {
           </Link>
         </div>
         <div>
-            <input value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} type="text" placeholder="Search tickets..." className="w-full p-2 border" />
+          <input
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            type="text"
+            placeholder="Search tickets..."
+            className="w-full p-2 border"
+          />
         </div>
       </div>
       <TicketList tickets={tickets} />
