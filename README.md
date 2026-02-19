@@ -50,6 +50,12 @@ CORS_ALLOWED_ORIGINS=http://localhost:80,http://tickets_frontend
 VITE_APP_BACKEND_URL=http://localhost:8000
 ```
 
+## Build and Run
+
+```bash
+docker-compose up --build
+```
+
 ## About Groq API
 
 ### Why Groq?
