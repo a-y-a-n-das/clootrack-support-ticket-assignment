@@ -65,7 +65,7 @@ docker-compose up --build
 ### Cost Optimization
 
 #### Option 2: Use Local Models (Zero Cost)
-You can replace Groq with local models for completely free operation:
+You can replace Groq with local models for completely free operation.
 
 
 ## API Endpoints
@@ -82,6 +82,7 @@ You can replace Groq with local models for completely free operation:
 - `GET /api/tickets/?status=open` - Filter by status
 
 ### AI Classification
+
 - `POST /api/tickets/classify/` - Auto-classify ticket
   ```json
   {
