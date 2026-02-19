@@ -44,7 +44,7 @@ export const updateTicket = async (id, data) => {
 
   //type checking for fields
 
-  const statusOptions = ["open", "in_progress", "closed"];
+  const statusOptions = ["open", "in_progress", "closed", "resolved"];
   const categoryOptions = ["billing", "technical", "general", "account"];
   const priorityOptions = ["low", "medium", "high"];
 

@@ -50,14 +50,14 @@ export default function Stats() {
             <div className="bg-white p-6 rounded shadow">
               <p className="text-gray-600">Total Tickets</p>
               <p className="text-3xl font-bold text-blue-600">
-                {statsData.total_tickets}
+                {statsData.total_tickets || 0}
               </p>
             </div>
 
             <div className="bg-white p-6 rounded shadow">
               <p className="text-gray-600">Open Tickets</p>
               <p className="text-3xl font-bold text-orange-600">
-                {statsData.open_tickets}
+                {statsData.open_tickets || 0}
               </p>
             </div>
 
@@ -67,19 +67,19 @@ export default function Stats() {
                 <p>
                   High:{" "}
                   <span className="font-bold text-red-600">
-                    {statsData.priority_breakdown.high}
+                    {statsData.priority_breakdown.high || 0}
                   </span>
                 </p>
                 <p>
                   Medium:{" "}
                   <span className="font-bold text-yellow-600">
-                    {statsData.priority_breakdown.medium}
+                    {statsData.priority_breakdown.medium || 0}
                   </span>
                 </p>
                 <p>
                   Low:{" "}
                   <span className="font-bold text-green-600">
-                    {statsData.priority_breakdown.low}
+                    {statsData.priority_breakdown.low || 0}
                   </span>
                 </p>
               </div>
@@ -88,10 +88,10 @@ export default function Stats() {
             <div className="bg-white p-6 rounded shadow">
               <p className="text-gray-600 mb-3">Category Breakdown</p>
               <div className="space-y-2">
-                {Object.entries(statsData.category_breakdown).map(
+                {Object.entries(statsData.category_breakdown || {}).map(
                   ([key, value]) => (
                     <p key={key}>
-                      {key}: <span className="font-bold">{value}</span>
+                      {key}: <span className="font-bold">{value || 0}</span>
                     </p>
                   ),
                 )}
@@ -101,7 +101,7 @@ export default function Stats() {
             <div className="bg-white p-6 rounded shadow col-span-2">
               <p className="text-gray-600">Average Tickets Per Day</p>
               <p className="text-3xl font-bold text-purple-600">
-                {statsData.avg_tickets_per_day}
+                {statsData.avg_tickets_per_day || 0}
               </p>
             </div>
           </div>
