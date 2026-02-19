@@ -18,8 +18,7 @@
 
 ### AI/ML Integration
 - **AI Provider:** Groq API (for ticket classification)
-- **Model:** OpenAI-compatible API via Groq
-- **Purpose:** Automatic ticket categorization and priority assignment
+- **Purpose:** Automatic ticket categorisation and priority assignment
 
 ### Containerization
 - **Containerization:** Docker & Docker Compose
@@ -56,17 +55,20 @@ VITE_APP_BACKEND_URL=http://localhost:8000
 docker-compose up --build
 ```
 
-## About Groq API
+## Design Decisions
 
 ### Why Groq?
 - **Generous Free Tier:** 1,000 API calls per day (more than enough for development)
 - **OpenAI-Compatible:** 
 
-### Cost Optimization
+### Cost Optimisation
 
 #### Option 2: Use Local Models (Zero Cost)
 You can replace Groq with local models for completely free operation.
 
+### Frontend
+
+- Choose JavaScript over TypeScript for building it quickly.
 
 ## API Endpoints
 
@@ -84,9 +86,9 @@ You can replace Groq with local models for completely free operation.
 ### AI Classification
 
 - `POST /api/tickets/classify/` - Auto-classify ticket
+  
   ```json
   {
     "description": "I can't login to my account"
   }
   ```
-
